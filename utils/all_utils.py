@@ -7,6 +7,14 @@ from matplotlib.colors import ListedColormap
 import os
 
 def prepare_data(df):
+    """It is used to separate the dependent variables and independent features
+
+    Args:
+        df (pd.DataFrame): its the pandans DataFrame too
+
+    Returns:
+        tuple: it returns the tuples of dependent and independent variables
+    """
     x = df.drop("y", axis=1)
     y = df["y"]
     return x, y
