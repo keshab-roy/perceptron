@@ -1,6 +1,10 @@
-from utils.all_utils import save_model, save_plot
+"""
+author: Keshab
+email:keshab@abc.com
+"""
+
 from utils.model import Perceptron
-from utils.all_utils import prepare_data
+from utils.all_utils import prepare_data, save_model, save_plot
 import pandas as pd
 
 def main(data, eta, epoch, modelFileName, plotFileName):
