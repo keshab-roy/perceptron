@@ -5,6 +5,7 @@ import pandas as pd
 import joblib
 from matplotlib.colors import ListedColormap
 import os
+import logging
 
 def prepare_data(df):
     """It is used to separate the dependent variables and independent features
@@ -15,17 +16,24 @@ def prepare_data(df):
     Returns:
         tuple: it returns the tuples of dependent and independent variables
     """
+    logging.info("Preparing data by segregating dependent variable.")
     x = df.drop("y", axis=1)
     y = df["y"]
     return x, y
 
 def save_model(model, filename):
+    logging.info("Saving the trained model.")
     model_dir="models"
     os.makedirs(model_dir, exist_ok=True)
     filepath=os.path.join(model_dir, filename)
     joblib.dump(model, filepath)
 
 def save_plot(df, file_name, model):
+    """
+    :param df: its a dataframe
+    :param file_name: its a file name to save plot
+    :param model: trained model
+    """
     def _create_base_plot(df):
         df.plot(kind="scatter", x="x1", y="x2",c="y",s=100, cmap="winter")
         plt.axhline(y=0, color="black", linestyle="--", linewidth=1)
@@ -40,10 +48,10 @@ def save_plot(df, file_name, model):
         x=x.values #as a array
         x1_min, x1_max=x[:,0].min() -1, x[:,0].max() +1
         x2_min, x2_max=x[:,1].min() -1, x[:,1].max() +1
-        print(f"x1_min: {x1_min}")
-        print(f"x1_max: {x1_max}")
-        print(f"x2_min: {x2_min}")
-        print(f"x2_max: {x2_max}")
+        #print(f"x1_min: {x1_min}")
+        #print(f"x1_max: {x1_max}")
+        #print(f"x2_min: {x2_min}")
+        #print(f"x2_max: {x2_max}")
         
         xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution), np.arange(x2_min, x2_max, resolution))
         z=classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
